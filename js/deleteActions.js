@@ -1,8 +1,6 @@
 const inquirer = require("inquirer");
 
 
-
-
 // Function to DELETE Departments Roles Employees
 function deleteDepartmentsRolesEmployees() {
     inquirer
