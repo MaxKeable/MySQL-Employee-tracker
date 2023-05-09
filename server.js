@@ -5,7 +5,7 @@ import cfonts from 'cfonts';
 import inquirer from 'inquirer';
 import { addDepartment, addRole, addEmployee, addManager } from './js/addActions.js';
 import { deleteDepartmentsRolesEmployees, deleteEmployee, deleteRole, deleteDepartment } from './js/deleteActions.js';
-import updateEmployeeRole from './js/updateAction.js';
+import { updateEmployeeRole, updateEmployeeManager } from './js/updateAction.js';
 import { viewAllDepartments, viewAllRoles, viewAllEmployees, viewEmployeesByManager, viewEmployeesByDepartment, viewTotalUtilizedBudgetOfDepartment } from './js/viewActions.js';
 
 
@@ -59,6 +59,7 @@ function start() {
                 "Add a Manager",
                 "Update an employee role",
                 "View Employees by Manager",
+                "Update an employee Manager",
                 "View Employees by Department",
                 "Delete Departments | Roles | Employees",
                 "View the total utilized budget of a department",
@@ -91,6 +92,9 @@ function start() {
                     break;
                 case "Update an employee role":
                     updateEmployeeRole();
+                    break;
+                case "Update an employee Manager":
+                    updateEmployeeManager();
                     break;
                 case "View Employees by Manager":
                     viewEmployeesByManager();

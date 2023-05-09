@@ -67,5 +67,64 @@ function updateEmployeeRole() {
     });
 }
 
+
+function updateEmployeeManager() {
+    const queryEmployees =
+        "SELECT employee.id, employee.first_name, employee.last_name, CONCAT(manager.first_name, ' ', manager.last_name) AS manager_name FROM employee LEFT JOIN employee AS manager ON employee.manager_id = manager.id";
+    connection.query(queryEmployees, (err, resEmployees) => {
+        if (err) throw err;
+        inquirer
+            .prompt([
+                {
+                    type: "list",
+                    name: "employee",
+                    message: "Select the employee to update:",
+                    choices: resEmployees.map(
+                        (employee) =>
+                            `${employee.first_name} ${employee.last_name}`
+                    ),
+                },
+                {
+                    type: "list",
+                    name: "manager",
+                    message: "Select the new manager:",
+                    choices: resEmployees.map(
+                        (employee) => 
+                        `${employee.manager_name}`
+                    ),
+                },
+            ])
+            .then((answers) => {
+                const employee = resEmployees.find(
+                    (employee) =>
+                        `${employee.first_name} ${employee.last_name}` ===
+                        answers.employee
+                );
+                const manager = resEmployees.find(
+                    (employee) =>
+                        `${employee.first_name} ${employee.last_name}` ===
+                        answers.manager
+                );
+                const query =
+                    "UPDATE employee SET manager_id = ? WHERE id = ?";
+                connection.query(
+                    query,
+                    [manager.id, employee.id],
+                    (err, res) => {
+                        if (err) throw err;
+                        console.log(
+                            `Updated ${employee.first_name} ${employee.last_name}'s manager to ${manager.first_name} ${manager.last_name} in the database!`
+                        );
+                        // restart the application
+                        start();
+                    }
+                );
+            });
+    });
+}
+
+
+
+
 // export function
-export default updateEmployeeRole; 
+export { updateEmployeeRole, updateEmployeeManager }; 
