@@ -1,6 +1,15 @@
-const inquirer = require("inquirer");
+import inquirer from "inquirer";
+import mysql from "mysql2";
+import start from '../server.js';
 
-
+// Create variable to connect to mysql
+const connection = mysql.createConnection({
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "qqy#QGYJCMPueVETRv9V",
+    database: "employeeTracker_db",
+});
 
 // function to view all departments
 function viewAllDepartments() {
@@ -41,6 +50,7 @@ function viewAllEmployees() {
     });
 }
 
+// function toe view employees by manager
 function viewEmployeesByManager() {
     const query = `
       SELECT 
@@ -151,3 +161,6 @@ function viewTotalUtilizedBudgetOfDepartment() {
             });
     });
 }
+
+// exporting all functions to be used in server.js
+export { viewAllDepartments, viewAllRoles, viewAllEmployees, viewEmployeesByManager, viewEmployeesByDepartment, viewTotalUtilizedBudgetOfDepartment };

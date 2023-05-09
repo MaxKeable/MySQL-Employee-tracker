@@ -1,4 +1,15 @@
-const inquirer = require("inquirer");
+import inquirer from "inquirer";
+import mysql from "mysql2";
+import start from '../server.js';
+
+// Create variable to connect to mysql
+const connection = mysql.createConnection({
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "qqy#QGYJCMPueVETRv9V",
+    database: "employeeTracker_db",
+});
 
 
 // function to update an employee role
@@ -55,3 +66,6 @@ function updateEmployeeRole() {
         });
     });
 }
+
+// export function
+export default updateEmployeeRole; 

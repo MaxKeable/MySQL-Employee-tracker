@@ -1,7 +1,17 @@
-const inquirer = require("inquirer");
+import inquirer from "inquirer";
+import mysql from "mysql2";
+import start from '../server.js';
 
+// Create variable to connect to mysql
+const connection = mysql.createConnection({
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "qqy#QGYJCMPueVETRv9V",
+    database: "employeeTracker_db",
+});
 
-// Function to DELETE Departments Roles Employees
+// Function to delete Departments Roles Employees
 function deleteDepartmentsRolesEmployees() {
     inquirer
         .prompt({
@@ -29,7 +39,7 @@ function deleteDepartmentsRolesEmployees() {
         });
 }
 
-// Function to DELETE Employees
+// Function to delete Employees
 function deleteEmployee() {
     const query = "SELECT * FROM employee";
     connection.query(query, (err, res) => {
@@ -67,7 +77,7 @@ function deleteEmployee() {
 }
 
 
-// Function to DELETE ROLE
+// Function to delete role
 function deleteRole() {
     // retrieve all available roles from the database
     const query = "SELECT * FROM roles";
@@ -107,7 +117,7 @@ function deleteRole() {
 }
 
 
-// Fuction to DELETE Department
+// Fuction to delete Department
 function deleteDepartment() {
     // get the list of departments
     const query = "SELECT * FROM departments";
@@ -151,3 +161,6 @@ function deleteDepartment() {
             });
     });
 }
+
+// export the functions to be used in server.js
+export { deleteDepartmentsRolesEmployees, deleteEmployee, deleteRole, deleteDepartment };

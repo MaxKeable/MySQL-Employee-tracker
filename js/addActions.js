@@ -1,5 +1,15 @@
-const inquirer = require("inquirer");
+import inquirer from "inquirer";
+import mysql from "mysql2";
+import start from '../server.js';
 
+// Create variable to connect to mysql
+const connection = mysql.createConnection({
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "qqy#QGYJCMPueVETRv9V",
+    database: "employeeTracker_db",
+});
 
 // function to add a department
 function addDepartment() {
@@ -22,6 +32,7 @@ function addDepartment() {
         });
 }
 
+// function to add a role 
 function addRole() {
     const query = "SELECT * FROM departments";
     connection.query(query, (err, res) => {
@@ -74,7 +85,7 @@ function addRole() {
 
 // Function to add an employee
 function addEmployee() {
-    // Retrieve list of roles from the database
+    // gets list of roles from the database
     connection.query("SELECT id, title FROM roles", (error, results) => {
         if (error) {
             console.error(error);
@@ -86,7 +97,7 @@ function addEmployee() {
             value: id,
         }));
 
-        // Retrieve list of employees from the database to use as managers
+        // gets list of employees from the database to use for managers
         connection.query(
             'SELECT id, CONCAT(first_name, " ", last_name) AS name FROM employee',
             (error, results) => {
@@ -100,7 +111,7 @@ function addEmployee() {
                     value: id,
                 }));
 
-                // Prompt the user for employee information
+                // Prompt the user for personal information
                 inquirer
                     .prompt([
                         {
@@ -227,3 +238,6 @@ function addManager() {
         });
     });
 }
+
+// exports the functions to be used in server.js
+export { addDepartment, addRole, addEmployee, addManager };
